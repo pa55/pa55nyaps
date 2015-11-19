@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+PA55 NYAPS Java Reference Implementation
+
+Copyright 2015 Anirban Basu
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+ 
+ -->
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.pa55nyaps.gui.view.NYAPSViewController">
+   <children>
+      <SplitPane dividerPositions="0.45" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="598.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <TableView fx:id="uictrlDatabaseEntryTable" layoutX="79.0" layoutY="-36.0" prefHeight="134.0" prefWidth="598.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                    <columns>
+                      <TableColumn fx:id="uictrlIdColumn" editable="false" prefWidth="125.0" resizable="false" text="ID" />
+                      <TableColumn fx:id="uictrlLengthColumn" editable="false" prefWidth="70.0" resizable="false" text="Length" />
+                        <TableColumn fx:id="uictrlIssueColumn" editable="false" prefWidth="90.0" resizable="false" text="Issue" />
+                        <TableColumn fx:id="uictrlNotesColumn" editable="false" prefWidth="290.0" resizable="false" text="Notes excerpts" />
+                    </columns>
+                  </TableView>
+                  <ButtonBar prefHeight="40.0" prefWidth="590.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="0.0">
+                    <buttons>
+                        <Button mnemonicParsing="false" onAction="#showAbout" text="About..." />
+                        <Button mnemonicParsing="false" onAction="#openPasswordDatabase" text="Open..." />
+                        <Button mnemonicParsing="false" onAction="#savePasswordDatabase" text="Save..." />
+                        <Separator orientation="VERTICAL" prefHeight="40.0" />
+                      <Button mnemonicParsing="false" onAction="#newPasswordEntry" text="New..." />
+                        <Button fx:id="uictrlEditButton" mnemonicParsing="false" onAction="#editSelectedPasswordEntry" text="Edit..." />
+                        <Button fx:id="uictrlDeleteButton" mnemonicParsing="false" onAction="#deleteSelectedPasswordEntry" text="Delete" />
+                    </buttons>
+                  </ButtonBar>
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="209.0" prefWidth="598.0" SplitPane.resizableWithParent="false">
+               <children>
+                  <Label layoutX="4.0" layoutY="117.0" prefHeight="16.0" prefWidth="402.0" text="Generated password" AnchorPane.bottomAnchor="82.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="117.0" />
+                  <ImageView fx:id="uictrlQRCode" fitHeight="185.0" fitWidth="185.0" layoutX="394.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="409.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="10.0" />
+                  <Label layoutX="4.0" layoutY="30.0" prefHeight="16.0" prefWidth="402.0" text="Master secret" AnchorPane.bottomAnchor="169.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="30.0" />
+                  <CheckBox fx:id="uictrlProtectQRCode" layoutX="4.0" layoutY="90.0" mnemonicParsing="false" prefWidth="402.0" selected="true" text="Protect the generated QR code with the master secret" AnchorPane.bottomAnchor="107.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="90.0" />
+                  <TextField fx:id="uictrlGeneratedPassword" editable="false" layoutX="4.0" layoutY="142.0" prefWidth="402.0" promptText="The generated password will appear here." AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="142.0" />
+                  <ButtonBar layoutX="4.0" layoutY="168.0" prefHeight="40.0" prefWidth="402.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="168.0">
+                    <buttons>
+                      <Button fx:id="uictrlGeneratePasswordButton" mnemonicParsing="false" onAction="#generatePassword" text="Generate" />
+                        <Button fx:id="uictrlCopyPasswordButton" mnemonicParsing="false" onAction="#copyPassword" text="Copy password" />
+                    </buttons>
+                  </ButtonBar>
+                  <PasswordField fx:id="uictrlMasterSecret" layoutX="4.0" layoutY="55.0" prefHeight="26.0" prefWidth="402.0" promptText="Type in your master secret" AnchorPane.bottomAnchor="134.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="55.0" />
+                  <Label fx:id="uictrlGeneratePasswordHeader" layoutX="4.0" layoutY="6.0" prefHeight="16.0" prefWidth="402.0" text="Generate password and QR code" AnchorPane.bottomAnchor="193.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="6.0">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+               </children></AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
