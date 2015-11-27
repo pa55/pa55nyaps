@@ -25,38 +25,44 @@ PA55 NYAPS has been developed to address the aforementioned shortcomings.
 
 ## Two fundamental questions
 
-Q1. Why is it open-source?
+Q1. *Why is it open-source?*
 
 We make PA55 open-source such that the users can see it for themselves that there is no funny business behind-the-scenes.
 
-Q2. There are plenty of password managers -- why PA55 NYAPS?
+Q2. *There are plenty of password managers -- why PA55 NYAPS?*
 
 This is because these password managers store the passwords (even if encrypted). Thus, compromising those encrypted files leads to the disclosure of the passwords. PA55 NYAPS only stores encrypted settings. The master secret is never stored. Thus, the passwords cannot be generated even if the settings files are compromised (unless, of course, the user stores information about their master secret in those files!).
 
 There are some password managers that had to ask their users to change their master passwords after their cloud servers got compromised. This is not the case with PA55 NYAPS. We do not store anything on our cloud servers. The user can store their settings files wherever they want, including on cloud storage services but the master secret is never stored.
 
+There is at least one password manager that, similar to PA55 NYAPS, stores settings instead of storing passwords and does not store an integral part of the password (akin to the master secret). The problem with such password managers is that they use very simple character substitution or shifting algorithms, which are to be kept secret, to generate the passwords. Yet, decades of research in cryptography have taught us that the strength of the algorithm should _not_ depend on the user's ability to hide it. Instead, even with a public algorithm, there should be no advantage in guessing the output even with partial knowledge of the inputs. We use publicly known algorithms in our password generator, i.e., PBKDF2 and AES CTR 128-bits based random number generator.
+
 ## Some technical Q&A
 
-Q1. What encryption is used for storing the password settings database files?
+Q1. *What encryption is used for storing the password settings database files?*
 
 Industry-standard AES 128-bits in CTR mode with 256-bit HMAC on the ciphertext.
 
-Q2. What encryption is used for _optionally protecting_ the QR code of the generated passwords?
+Q2. *What encryption is used for _optionally protecting_ the QR code of the generated passwords?*
 
 AES 128-bits in CTR mode with 256-bit HMAC on the ciphertext.
 
-Q3. PA55 offered an option for specifying the hash function: SHA-1, SHA-256, SHA-512. What happened to that?
+Q3. *PA55 offered an option for specifying the hash function: SHA-1, SHA-256, SHA-512. What happened to that?*
 
 PA55 NYAPS no longer offers that choice. The hash function used by the password based key derivation function (PBKDF2) is SHA-512.
 
-Q4. PA55 offered an option for specifying the iterations, e.g., 250K, 500K. Where is that now?
+Q4. *PA55 offered an option for specifying the iterations, e.g., 250K, 500K. Where is that now?*
 
 PA55 NYAPS no longer offers that choice. The rounds used by the password based key derivation function (PBKDF2) is fixed at 25,000 (25K).
 
-Q5. What random number generator is used in PA55 NYAPS in the password generation algorithm?
+Q5. *What random number generator is used in PA55 NYAPS in the password generation algorithm?*
 
 AES 128-bits in CTR mode is the basis of the deterministic random bits generator. 128-bits blocks (on counter increment) from the cipher is used to generate random numbers.
 
-##Further reading
+Q6. *Is there a version that runs on smart phones?*
 
-For further information, including description of the algorithm, please refer to the [wiki pages](https://github.com/pa55/pa55nyaps/wiki) of this repository.
+Yes, there is an [iOS version](https://github.com/pa55/pa55nyaps-ios) that runs on iPhones and iPads. There is an [Android version](https://github.com/pa55/pa55nyaps-android) under development.
+
+##Further information
+
+For further information, including description of the algorithm and how to contribute to this repository, please refer to the [wiki pages](https://github.com/pa55/pa55nyaps/wiki) of this repository.
