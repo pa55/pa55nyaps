@@ -2,7 +2,7 @@
 <anttasks:AntTask xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:anttasks="http://org.eclipse.fx.ide.jdt/1.0" buildDirectory="${project}/build" cssToBin="true">
   <deploy height="" width="" packagingFormat="dmg">
     <application name="testJavaFX" mainclass="prototype.pa55nyaps.gui.PA55NYAPSApp" version="1.0" toolkit="fx"/>
-    <info title="PA55 NYAPS" vendor="Anirban Basu"/>
+    <info title="PA55NYAPS" vendor="Anirban Basu"/>
   </deploy>
   <signjar/>
 </anttasks:AntTask>

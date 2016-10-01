@@ -38,6 +38,8 @@ import prototype.pa55nyaps.dataobjects.PasswordDatabaseEntry;
 import prototype.pa55nyaps.gui.PA55NYAPSApp;
 import prototype.pa55nyaps.gui.model.PasswordDatabaseEntryModel;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -88,6 +90,9 @@ public class NYAPSViewController {
 	
 	@FXML
 	private TextField uictrlGeneratedPassword;
+	
+	@FXML
+	private TextField uictrlFilterField;
 	
 	@FXML
 	private ImageView uictrlQRCode;
@@ -279,7 +284,44 @@ public class NYAPSViewController {
     	
     	ObservableList<PasswordDatabaseEntryModel> items = mainApp.loadPasswordDatabase();
     	if(items!=null) {
-    		uictrlDatabaseEntryTable.getItems().addAll(items);
+    		FilteredList<PasswordDatabaseEntryModel> filteredItems = new FilteredList<>(items, p -> true);
+    		
+    		uictrlFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
+    			filteredItems.setPredicate(pdbEntry -> {
+    				if(newValue == null || newValue.isEmpty()) {
+    					return true;
+    				}
+    				
+    				String lowerCaseFilter = newValue.toLowerCase();
+    				
+    				if(pdbEntry.getNotes().getServiceName().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				else if(pdbEntry.getNotes().getUserID().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				else if(pdbEntry.getNotes().getAdditionalInfo().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				else if(pdbEntry.getNotes().getExcerpts().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				else if(pdbEntry.getNotes().getServiceLink().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				else if(pdbEntry.getId().getValue().toLowerCase().contains(lowerCaseFilter)) {
+    					return true;
+    				}
+    				
+    				return false;
+    			});
+    		});
+    		
+    		SortedList<PasswordDatabaseEntryModel> sortedItems = new SortedList<>(filteredItems);
+    		sortedItems.comparatorProperty().bind(uictrlDatabaseEntryTable.comparatorProperty());
+    		
+    		//uictrlDatabaseEntryTable.getItems().addAll(filteredItems);
+    		uictrlDatabaseEntryTable.setItems(sortedItems);
     		mainApp.shouldSave = false;
     	}
 	}
@@ -347,7 +389,7 @@ public class NYAPSViewController {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setGraphic(new ImageView(this.appLogoSmall));
 		alert.setTitle("About PA55 NYAPS");
-		alert.setHeaderText("PA55 NYAPS (Not Yet Another Password Store) 1.0");
+		alert.setHeaderText("PA55 NYAPS (Not Yet Another Password Store) 1.1");
 		
 		GridPane content = new GridPane();
 		content.setMaxWidth(400);
@@ -366,7 +408,7 @@ public class NYAPSViewController {
 		
 		alert.getDialogPane().setContent(content);
 
-		String licenseText = "LICENSE: PA55 NYAPS Java Reference Implementation\n\nCopyright 2015 Anirban Basu.\nWith portions copyright 2015, Juan Camilo Corena.\n\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\n\nAPPENDIX A - LICENSE: Bouncy Castle\n\nCopyright (c) 2000 - 2015 The Legion of the Bouncy Castle Inc. (http://www.bouncycastle.org)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\nAPPENDIX B - OTHER SOFTWARE\n\nPA55 NYAPS makes use of Google Gson (https://github.com/google/gson) and Zxing (https://github.com/zxing/zxing) open-source projects. Please refer to the individual project websites for further information about their specific licenses.";
+		String licenseText = "LICENSE: PA55 NYAPS Java Reference Implementation\n\nCopyright 2015-2016 Anirban Basu.\nWith portions copyright 2015, Juan Camilo Corena.\n\nLicensed under the Apache License, Version 2.0 (the \"License\"); you may not use this file except in compliance with the License. You may obtain a copy of the License at\n\nhttp://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.\n\n\nAPPENDIX A - LICENSE: Bouncy Castle\n\nCopyright (c) 2000 - 2015 The Legion of the Bouncy Castle Inc. (http://www.bouncycastle.org)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\nAPPENDIX B - OTHER SOFTWARE\n\nPA55 NYAPS makes use of Google Gson (https://github.com/google/gson) and Zxing (https://github.com/zxing/zxing) open-source projects. Please refer to the individual project websites for further information about their specific licenses.";
 		
 
 		TextArea licenseTextArea = new TextArea(licenseText);
