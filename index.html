@@ -31,19 +31,19 @@
       </header>
       <section>
         <h1>
-<a id="pa55-nyaps" class="anchor" href="#pa55-nyaps" aria-hidden="true"><span class="octicon octicon-link"></span></a>PA55 NYAPS</h1>
+<a id="pa55-nyaps" class="anchor" href="#pa55-nyaps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PA55 NYAPS</h1>
 
 <p>Not Yet Another Password Store</p>
 
 <h2>
-<a id="pa55-background" class="anchor" href="#pa55-background" aria-hidden="true"><span class="octicon octicon-link"></span></a>PA55 background</h2>
+<a id="pa55-background" class="anchor" href="#pa55-background" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>PA55 background</h2>
 
 <p>This is the Java reference implementation of the PA55 NYAPS. The <a href="http://pa55.github.io/pa55/">concept behind the original PA55</a> is that users do not need to remember complex passwords but should be able to <strong>deterministically</strong> generate complex passwords from rather simple information that the user can remember. Specifically, for every complex password, the user needs to remember a master secret (common for all passwords) and a hint (specific to each password).</p>
 
 <p>For instance, with a master secret <em>This is a master secret</em> (really, it should not be this simple!) and a hint <em>01011970@myservice</em> (emulating the fact that people use their birthdays to make their passwords) will generate a 12-character password <em>rEApgiO6YgN+</em> when the password iterations and hash functions are set to 250,000 and SHA-256 respectively. That is a nice password with a 72-bits entropy for <em>myservice</em>. Yet, while guessing <em>01011970@myservice</em> may be trivial for someone with background knowledge, guessing a rather long master secret is not easy -- master secrets could be entire sentences. Even a wrongly guessed master secret differing in just one character from the actual master secret will produce (with a very high probability) a very different password. Neither the master secret nor any hint is stored by the application. Thus, if either of these are lost, it is impossible to recover the corresponding complex passwords. That should not be a matter of concern because in the event of forgotten passwords, most services will allow resetting them albeit a minor inconvenience.</p>
 
 <h3>
-<a id="the-limitations-of-pa55" class="anchor" href="#the-limitations-of-pa55" aria-hidden="true"><span class="octicon octicon-link"></span></a>The limitations of PA55</h3>
+<a id="the-limitations-of-pa55" class="anchor" href="#the-limitations-of-pa55" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>The limitations of PA55</h3>
 
 <p>There are two fundamental limitations of PA55.</p>
 
@@ -53,7 +53,7 @@
 </ol>
 
 <h2>
-<a id="whats-different-with-pa55-nyaps" class="anchor" href="#whats-different-with-pa55-nyaps" aria-hidden="true"><span class="octicon octicon-link"></span></a>What's different with PA55 NYAPS?</h2>
+<a id="whats-different-with-pa55-nyaps" class="anchor" href="#whats-different-with-pa55-nyaps" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What's different with PA55 NYAPS?</h2>
 
 <p>PA55 NYAPS has been developed to address the aforementioned shortcomings.</p>
 
@@ -63,7 +63,7 @@
 </ol>
 
 <h2>
-<a id="two-fundamental-questions" class="anchor" href="#two-fundamental-questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Two fundamental questions</h2>
+<a id="two-fundamental-questions" class="anchor" href="#two-fundamental-questions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Two fundamental questions</h2>
 
 <p>Q1. <em>Why is it open-source?</em></p>
 
@@ -78,7 +78,7 @@
 <p>There is at least one password manager that, similar to PA55 NYAPS, stores settings instead of storing passwords and does not store an integral part of the password (akin to the master secret). The problem with such password managers is that they use very simple character substitution or shifting algorithms, which are to be kept secret, to generate the passwords. Yet, decades of research in cryptography have taught us that the strength of the algorithm should <em>not</em> depend on the user's ability to hide it. Instead, even with a public algorithm, there should be no advantage in guessing the output even with partial knowledge of the inputs. We use publicly known algorithms in our password generator, i.e., PBKDF2 and AES CTR 128-bits based random number generator.</p>
 
 <h2>
-<a id="some-technical-qa" class="anchor" href="#some-technical-qa" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some technical Q&amp;A</h2>
+<a id="some-technical-qa" class="anchor" href="#some-technical-qa" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Some technical Q&amp;A</h2>
 
 <p>Q1. <em>What encryption is used for storing the password settings database files?</em></p>
 
@@ -104,8 +104,12 @@
 
 <p>Yes, there is an <a href="https://github.com/pa55/pa55nyaps-ios">iOS version</a> that runs on iPhones and iPads. There is an <a href="https://github.com/pa55/pa55nyaps-android">Android version</a> under development.</p>
 
+<p>Q7. <em>I am lazy to run the executable JAR file. Is there a OS native version that I can double-click and run?</em></p>
+
+<p>Yes, there is a <a href="https://github.com/pa55/pa55nyaps/releases/tag/release-v1.1.0-dmg">Mac OS X version</a>.</p>
+
 <h2>
-<a id="further-information" class="anchor" href="#further-information" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further information</h2>
+<a id="further-information" class="anchor" href="#further-information" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Further information</h2>
 
 <p>For further information, including description of the algorithm and how to contribute to this repository, please refer to the <a href="https://github.com/pa55/pa55nyaps/wiki">wiki pages</a> of this repository.</p>
       </section>
