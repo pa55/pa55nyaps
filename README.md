@@ -63,6 +63,10 @@ Q6. *Is there a version that runs on smart phones?*
 
 Yes, there is an [iOS version](https://github.com/pa55/pa55nyaps-ios) that runs on iPhones and iPads. There is an [Android version](https://github.com/pa55/pa55nyaps-android) under development.
 
+Q7. *I am lazy to run the executable JAR file. Is there a OS native version that I can double-click and run?*
+
+Yes, there is a [Mac OS X version](https://github.com/pa55/pa55nyaps/releases/tag/release-v1.1.0-dmg).
+
 ##Further information
 
 For further information, including description of the algorithm and how to contribute to this repository, please refer to the [wiki pages](https://github.com/pa55/pa55nyaps/wiki) of this repository.
