@@ -37,6 +37,7 @@ import prototype.pa55nyaps.crypto.AESCryptosystem;
 import prototype.pa55nyaps.dataobjects.PasswordDatabaseEntry;
 import prototype.pa55nyaps.gui.PA55NYAPSApp;
 import prototype.pa55nyaps.gui.model.PasswordDatabaseEntryModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -112,7 +113,7 @@ public class NYAPSViewController {
 	@FXML
 	private Button uictrlCopyPasswordButton;
 	
-	
+	private ObservableList<PasswordDatabaseEntryModel> items = FXCollections.observableArrayList();
 	
 	private PasswordDatabaseEntry dbEntry = null;
 	
@@ -277,12 +278,13 @@ public class NYAPSViewController {
     
     @FXML
     private void openPasswordDatabase() {
-    	mainApp.updateDatabaseWithUIModel(uictrlDatabaseEntryTable.getItems());
+    	uictrlFilterField.clear();
+    	mainApp.updateDatabaseWithUIModel(items);
     	
-    	uictrlDatabaseEntryTable.getItems().clear();
+    	items.clear();
     	clearGeneratedPassword();
     	
-    	ObservableList<PasswordDatabaseEntryModel> items = mainApp.loadPasswordDatabase();
+    	items = mainApp.loadPasswordDatabase();
     	if(items!=null) {
     		FilteredList<PasswordDatabaseEntryModel> filteredItems = new FilteredList<>(items, p -> true);
     		
@@ -320,24 +322,23 @@ public class NYAPSViewController {
     		SortedList<PasswordDatabaseEntryModel> sortedItems = new SortedList<>(filteredItems);
     		sortedItems.comparatorProperty().bind(uictrlDatabaseEntryTable.comparatorProperty());
     		
-    		//uictrlDatabaseEntryTable.getItems().addAll(filteredItems);
     		uictrlDatabaseEntryTable.setItems(sortedItems);
     		mainApp.shouldSave = false;
+    	}
+    	else {
+    		items = FXCollections.observableArrayList();
     	}
 	}
     
     @FXML
     private void savePasswordDatabase() {
-    	mainApp.updateDatabaseWithUIModel(uictrlDatabaseEntryTable.getItems());
+    	uictrlFilterField.clear();
+    	mainApp.updateDatabaseWithUIModel(items);
     	mainApp.saveLoadedDatabase();
     }
 
 	public void setMainApp(PA55NYAPSApp mainApp) {
 		this.mainApp = mainApp;
-	}
-
-	public TableView<PasswordDatabaseEntryModel> getUictrlDatabaseEntryTable() {
-		return uictrlDatabaseEntryTable;
 	}
 	
 	@FXML
@@ -350,7 +351,7 @@ public class NYAPSViewController {
 
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result!=null && result.get() == ButtonType.OK){
-				uictrlDatabaseEntryTable.getItems().remove(uictrlDatabaseEntryTable.getSelectionModel().getSelectedIndex());
+				items.remove(uictrlDatabaseEntryTable.getSelectionModel().getSelectedItem());
 				uictrlDatabaseEntryTable.getSelectionModel().clearSelection();
 				dbEntry = null;
 				mainApp.shouldSave = true;
@@ -363,8 +364,8 @@ public class NYAPSViewController {
 		if(uictrlDatabaseEntryTable.getSelectionModel().getSelectedIndex() >= 0) {
 			PasswordDatabaseEntry editedEntry = mainApp.showEditEntryDialog(dbEntry, "Edit " + dbEntry.getId());
 			if(editedEntry!=null) {
-				uictrlDatabaseEntryTable.getItems().remove(uictrlDatabaseEntryTable.getSelectionModel().getSelectedIndex());
-				uictrlDatabaseEntryTable.getItems().add(new PasswordDatabaseEntryModel(editedEntry));
+				items.remove(uictrlDatabaseEntryTable.getSelectionModel().getSelectedItem());
+				items.add(new PasswordDatabaseEntryModel(editedEntry));
 				uictrlDatabaseEntryTable.getSelectionModel().clearSelection();
 				dbEntry = null;
 				mainApp.shouldSave = true;
@@ -377,7 +378,7 @@ public class NYAPSViewController {
 		dbEntry = new PasswordDatabaseEntry("new entry " + Calendar.getInstance().getTimeInMillis());
 		PasswordDatabaseEntry editedEntry = mainApp.showEditEntryDialog(dbEntry, "Edit " + dbEntry.getId());
 		if(editedEntry!=null) {
-			uictrlDatabaseEntryTable.getItems().add(new PasswordDatabaseEntryModel(editedEntry));
+			items.add(new PasswordDatabaseEntryModel(editedEntry));
 			uictrlDatabaseEntryTable.getSelectionModel().clearSelection();
 			dbEntry = null;
 			mainApp.shouldSave = true;
@@ -429,6 +430,11 @@ public class NYAPSViewController {
 		alert.getDialogPane().setExpanded(true);
 
 		alert.showAndWait();
+	}
+
+	public ObservableList<PasswordDatabaseEntryModel> getItems() {
+		uictrlFilterField.clear();
+		return items;
 	}
 
 }

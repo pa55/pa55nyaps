@@ -131,7 +131,7 @@ public class PA55NYAPSApp extends Application {
             
             primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 public void handle(WindowEvent we) {
-                	updateDatabaseWithUIModel(controller.getUictrlDatabaseEntryTable().getItems());
+                	updateDatabaseWithUIModel(controller.getItems());
                 	saveAndClearLoadedDatabase();
                 }
             });
