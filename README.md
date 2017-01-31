@@ -65,7 +65,7 @@ Yes, there is an [iOS version](https://github.com/pa55/pa55nyaps-ios) that runs 
 
 Q7. *I am lazy to run the executable JAR file. Is there a OS native version that I can double-click and run?*
 
-Yes, there is a [Mac OS X version](https://github.com/pa55/pa55nyaps/releases/tag/release-v1.1.0-dmg).
+Yes, there are OS native versions, see the [releases](https://github.com/pa55/pa55nyaps/releases).
 
 ##Further information
 
