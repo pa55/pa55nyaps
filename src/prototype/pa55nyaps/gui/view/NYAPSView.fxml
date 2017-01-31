@@ -20,16 +20,21 @@ limitations under the License.
  
  -->
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.pa55nyaps.gui.view.NYAPSViewController">
+<AnchorPane prefHeight="450.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="prototype.pa55nyaps.gui.view.NYAPSViewController">
    <children>
       <SplitPane dividerPositions="0.47" orientation="VERTICAL" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
@@ -63,7 +68,7 @@ limitations under the License.
                   <ImageView fx:id="uictrlQRCode" fitHeight="185.0" fitWidth="185.0" layoutX="413.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="10.0" />
                   <Label layoutX="4.0" layoutY="28.0" prefHeight="27.0" prefWidth="402.0" text="Master secret" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="27.0" />
                   <CheckBox fx:id="uictrlProtectQRCode" layoutX="4.0" layoutY="82.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="402.0" selected="true" text="Protect the generated QR code with the master secret" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="81.0" />
-                  <TextField fx:id="uictrlGeneratedPassword" editable="false" layoutX="4.0" layoutY="130.0" prefHeight="27.0" prefWidth="402.0" promptText="The generated password will appear here." AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="135.0" />
+                  <TextField fx:id="uictrlGeneratedPassword" editable="false" layoutX="4.0" layoutY="130.0" prefHeight="27.0" prefWidth="402.0" promptText="The generated password will appear here" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="135.0" />
                   <ButtonBar layoutX="4.0" layoutY="162.0" prefHeight="40.0" prefWidth="402.0" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="162.0">
                     <buttons>
                       <Button fx:id="uictrlGeneratePasswordButton" mnemonicParsing="false" onAction="#generatePassword" text="Generate" />
@@ -76,6 +81,8 @@ limitations under the License.
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
+                  <CheckBox fx:id="uictrlShowHideMasterSecret" layoutX="315.0" layoutY="32.0" mnemonicParsing="false" text="Show" AnchorPane.rightAnchor="192.0" />
+                  <TextField fx:id="uictrlUnmaskedMasterSecret" layoutX="4.0" layoutY="54.0" prefWidth="402.0" promptText="The typed master secret will be displayed in clear text" AnchorPane.leftAnchor="4.0" AnchorPane.rightAnchor="192.0" AnchorPane.topAnchor="54.0" />
                </children></AnchorPane>
         </items>
       </SplitPane>
