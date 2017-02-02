@@ -187,6 +187,10 @@ public class NYAPSViewController {
     	
     	uictrlQRCode.setPreserveRatio(true);
     	
+    	items = FXCollections.observableArrayList();
+    	
+    	initialiseFilteredTable();
+    	
     	clearGeneratedPassword();
     	
     }
@@ -292,6 +296,46 @@ public class NYAPSViewController {
     	uictrlGeneratePasswordHeader.setText("Generate password");
     }
     
+    private void initialiseFilteredTable() {
+    	FilteredList<PasswordDatabaseEntryModel> filteredItems = new FilteredList<>(items, p -> true);
+		
+		uictrlFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
+			filteredItems.setPredicate(pdbEntry -> {
+				if(newValue == null || newValue.isEmpty()) {
+					return true;
+				}
+				
+				String lowerCaseFilter = newValue.toLowerCase();
+				
+				if(pdbEntry.getNotes().getServiceName().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				else if(pdbEntry.getNotes().getUserID().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				else if(pdbEntry.getNotes().getAdditionalInfo().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				else if(pdbEntry.getNotes().getExcerpts().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				else if(pdbEntry.getNotes().getServiceLink().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				else if(pdbEntry.getId().getValue().toLowerCase().contains(lowerCaseFilter)) {
+					return true;
+				}
+				
+				return false;
+			});
+		});
+		
+		SortedList<PasswordDatabaseEntryModel> sortedItems = new SortedList<>(filteredItems);
+		sortedItems.comparatorProperty().bind(uictrlDatabaseEntryTable.comparatorProperty());
+		
+		uictrlDatabaseEntryTable.setItems(sortedItems);
+    }
+    
     @FXML
     private void openPasswordDatabase() {
     	uictrlFilterField.clear();
@@ -301,49 +345,13 @@ public class NYAPSViewController {
     	clearGeneratedPassword();
     	
     	items = mainApp.loadPasswordDatabase();
-    	if(items!=null) {
-    		FilteredList<PasswordDatabaseEntryModel> filteredItems = new FilteredList<>(items, p -> true);
-    		
-    		uictrlFilterField.textProperty().addListener((observable, oldValue, newValue) -> {
-    			filteredItems.setPredicate(pdbEntry -> {
-    				if(newValue == null || newValue.isEmpty()) {
-    					return true;
-    				}
-    				
-    				String lowerCaseFilter = newValue.toLowerCase();
-    				
-    				if(pdbEntry.getNotes().getServiceName().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				else if(pdbEntry.getNotes().getUserID().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				else if(pdbEntry.getNotes().getAdditionalInfo().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				else if(pdbEntry.getNotes().getExcerpts().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				else if(pdbEntry.getNotes().getServiceLink().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				else if(pdbEntry.getId().getValue().toLowerCase().contains(lowerCaseFilter)) {
-    					return true;
-    				}
-    				
-    				return false;
-    			});
-    		});
-    		
-    		SortedList<PasswordDatabaseEntryModel> sortedItems = new SortedList<>(filteredItems);
-    		sortedItems.comparatorProperty().bind(uictrlDatabaseEntryTable.comparatorProperty());
-    		
-    		uictrlDatabaseEntryTable.setItems(sortedItems);
-    		mainApp.shouldSave = false;
-    	}
-    	else {
+    	if(items==null) {
     		items = FXCollections.observableArrayList();
     	}
+    	
+    	initialiseFilteredTable();
+    	
+		mainApp.shouldSave = false;
 	}
     
     @FXML

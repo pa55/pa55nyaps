@@ -30,6 +30,7 @@ import java.util.Scanner;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import prototype.pa55nyaps.crypto.AESCryptosystem;
@@ -183,14 +184,14 @@ public class PA55NYAPSApp extends Application {
 				saveLoadedDatabase();
 			}
 			fileSelectedPasswordDb = null;
-			passwordDatabase = null;
 			openDatabasePassword = null;
+			passwordDatabase = new PasswordDatabase();
 			this.primaryStage.setTitle(APP_NAME);
 		}
 	}
 	
 	public void saveLoadedDatabase() {
-		if(passwordDatabase!=null && passwordDatabase.getDatabase().size() > 0) { //no point of trying to save an empty database
+		if(passwordDatabase!=null /*&& passwordDatabase.getDatabase().size() > 0*/) { //any point of trying to save an empty database?
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.getExtensionFilters().add(new ExtensionFilter("PA55 NYAPS file (*.pa55)", "*.pa55"));
 			fileChooser.setTitle("Save to a PA55 NYAPS file");
@@ -326,11 +327,14 @@ public class PA55NYAPSApp extends Application {
 			String json = AESCryptosystem.getInstance().decryptWithHmac(ciphertext, password);
 			Type dbType = new TypeToken<PasswordDatabase>(){}.getType();
 			passwordDatabase = gson.fromJson(json.toString(), dbType);
+			if(passwordDatabase==null) {
+				throw new JsonSyntaxException(file.getName() + " contains a password database that cannot be deserialized.");
+			}
 			this.primaryStage.setTitle(APP_NAME + " - " + file.getName());
 			retVal = true;
 		} catch (Exception ex) {
 			ex.printStackTrace(System.err);
-			showAlert(AlertType.ERROR, "File save error", ex.getClass().getName(), ex.getLocalizedMessage());
+			showAlert(AlertType.ERROR, "File open error", ex.getClass().getName(), ex.getLocalizedMessage());
 		}
 		return retVal;
 	}
@@ -338,11 +342,14 @@ public class PA55NYAPSApp extends Application {
 	public void saveDatabaseToFile(PasswordDatabase database, File file, String password, boolean silent) {
 		PrintStream pos;
 		try {
-			pos = new PrintStream(file.getAbsolutePath());
 			String json = gson.toJson(database);
 			//System.out.println(json);
+			if(json==null) {
+				throw new JsonSyntaxException("The password database cannot be serialized.");
+			}
 			Ciphertext ciphertext = AESCryptosystem.getInstance().encryptWithHmac(json, new String(password));
 			String jsonct = gson.toJson(ciphertext);
+			pos = new PrintStream(file.getAbsolutePath());
 			pos.print(jsonct);
 			pos.flush();
 			pos.close();
