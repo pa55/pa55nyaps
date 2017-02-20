@@ -35,7 +35,7 @@ This is because these password managers store the passwords (even if encrypted).
 
 There are some password managers that had to ask their users to change their master passwords after their cloud servers got compromised. This is not the case with PA55 NYAPS. We do not store anything on our cloud servers. The user can store their settings files wherever they want, including on cloud storage services but the master secret is never stored.
 
-There is at least one password manager that, similar to PA55 NYAPS, stores settings instead of storing passwords and does not store an integral part of the password (akin to the master secret). The problem with such password managers is that they use very simple character substitution or shifting algorithms, which are to be kept secret, to generate the passwords. Yet, decades of research in cryptography have taught us that the strength of the algorithm should _not_ depend on the user's ability to hide it. Instead, even with a public algorithm, there should be no advantage in guessing the output even with partial knowledge of the inputs. We use publicly known algorithms in our password generator, i.e., PBKDF2 and AES CTR 128-bits based random number generator.
+There is at least [one password manager](http://passwordchef.co/) that, similar to PA55 NYAPS, stores settings instead of storing passwords and does not store an integral part of the password (akin to the master secret). The problem with such password managers is that they use very simple character substitution or shifting algorithms, which are to be kept secret, to generate the passwords. Yet, decades of research in cryptography have taught us that the strength of the algorithm should _not_ depend on the user's ability to hide it. Instead, even with a public algorithm, there should be no advantage in guessing the output even with partial knowledge of the inputs. We use publicly known algorithms in our password generator, i.e., PBKDF2 and AES CTR 128-bits based random number generator.
 
 ## Some technical Q&A
 
@@ -65,7 +65,7 @@ Yes, there is an [iOS version](https://github.com/pa55/pa55nyaps-ios) that runs 
 
 Q7. *I am lazy to run the executable JAR file. Is there a OS native version that I can double-click and run?*
 
-Yes, there is a [Mac OS X version](https://github.com/pa55/pa55nyaps/releases/tag/release-v1.1.0-dmg).
+Yes, there is are OS native versions for MacOS and Windows, see [releases](https://github.com/pa55/pa55nyaps/releases).
 
 ##Further information
 
