@@ -67,6 +67,6 @@ Q7. *I am lazy to run the executable JAR file. Is there a OS native version that
 
 Yes, there is are OS native versions for MacOS and Windows, see [releases](https://github.com/pa55/pa55nyaps/releases).
 
-##Further information
+## Further information
 
 For further information, including description of the algorithm and how to contribute to this repository, please refer to the [wiki pages](https://github.com/pa55/pa55nyaps/wiki) of this repository.
