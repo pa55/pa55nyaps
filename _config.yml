@@ -1,0 +1,8 @@
+title: PA55 NYAPS (Java)
+description: PA55 NYAPS – Not Yet Another Password Store
+google_analytics: UA-3539056-14
+show_downloads: true
+theme: jekyll-theme-dinky
+
+gems:
+  - jekyll-mentions
